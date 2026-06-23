@@ -38,8 +38,25 @@ public class OfflineDAO implements TravelWarningDAO{
      */
     @Override
     public void requestWarningPreviews( Action< ArrayList<TravelWarningPreview> > callback){
+        Optional<String> jsonOptional = loadJsonFromOfflineCache();
 
+        if(jsonOptional.isEmpty()){
+            LOGGER.log(Level.INFO, "Offline-Cache nicht gefunden oder leer");
+            return;
+        }
 
+        String json = jsonOptional.get();
+        TypeReference<List<TravelWarningPreview>> reference = new TypeReference<>() {
+        };
+        try {
+            List<TravelWarningPreview> warnings = OBJECT_MAPPER.readValue(json, reference);
+            if(warnings != null){
+                LOGGER.info("Erfolgreich " + warnings.size() + " Reisewarnungen aus dem Cache geladen");
+                callback.invoke( new ArrayList<>(warnings) );
+            }
+        } catch (JsonProcessingException e) {
+            LOGGER.log(Level.SEVERE, "Fehler beim Parsen des Offline-Cache: " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -50,8 +67,34 @@ public class OfflineDAO implements TravelWarningDAO{
      */
     @Override
     public void requestWarningById(String id, Action<TravelWarning> callback){
+        Optional<String> jsonOptional = loadJsonFromOfflineCache();
 
+        if(jsonOptional.isEmpty()){
+            LOGGER.info("Offline-Cache nicht gefunden oder leer");
+            return;
+        }
 
+        String json = jsonOptional.get();
+        TypeReference<List<TravelWarning>> reference = new TypeReference<>() {
+        };
+
+        try {
+            List<TravelWarning> warnings = OBJECT_MAPPER.readValue(json, reference);
+            if(warnings != null) {
+                Optional<TravelWarning> foundWarning = warnings.stream()
+                        .filter(warning -> warning.id().equals(id))
+                        .findFirst();
+
+                if(foundWarning.isPresent()) {
+                    LOGGER.info("Reisewarnung mit ID '" + id + "' aus dem Cache geladen");
+                    callback.invoke( foundWarning.get() );
+                } else {
+                    LOGGER.warning("Reisewarnung mit ID '" + id + "' nicht im Cache gefunden");
+                }
+            }
+        } catch (JsonProcessingException e) {
+            LOGGER.log(Level.SEVERE, "Fehler beim Parsen des Offline-Cache: " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -60,8 +103,18 @@ public class OfflineDAO implements TravelWarningDAO{
      * @return Optional mit dem JSON-String, wenn die Datei existiert, ansonsten leer
      */
     private Optional<String> loadJsonFromOfflineCache(){
-
-        throw new UnsupportedOperationException("Noch nicht implementiert");
-
+        Path path = Paths.get(OFFLINE_CACHE_PATH);
+        if(Files.exists(path) && Files.isRegularFile(path)){
+            try {
+                String json = Files.readString(path);
+                return Optional.of(json);
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Fehler beim Lesen der Offline-Cache-Datei: " + e.getMessage(), e);
+                return Optional.empty();
+            }
+        }
+        else{
+            return Optional.empty();
+        }
     }
 }

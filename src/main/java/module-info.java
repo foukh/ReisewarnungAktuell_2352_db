@@ -12,6 +12,8 @@ module com.brh.reisewarnungaktuell {
     requires java.logging;
     requires com.fasterxml.jackson.databind;
     requires java.desktop;
+    requires jdk.security.auth;
+    requires java.sql;
 
     opens com.brh.reisewarnungaktuell to javafx.fxml;
     exports com.brh.reisewarnungaktuell;

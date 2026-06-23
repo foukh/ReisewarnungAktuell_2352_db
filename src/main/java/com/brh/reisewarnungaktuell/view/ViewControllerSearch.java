@@ -1,8 +1,13 @@
 package com.brh.reisewarnungaktuell.view;
 
 import com.brh.reisewarnungaktuell.controller.MainController;
+import com.brh.reisewarnungaktuell.controller.dao.OfflineDAO;
+import com.brh.reisewarnungaktuell.controller.dao.OnlineDAO;
 import com.brh.reisewarnungaktuell.model.TravelWarningPreview;
+import com.sun.security.auth.NTNumericCredential;
+import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -24,6 +30,9 @@ public class ViewControllerSearch {
 
     @FXML
     private ScrollPane scrollPane;
+
+    @FXML
+    private Button offlineCacheClearBtn;
 
     /**
      * Wird bei Instanziierung des Controllers aufgerufen.
@@ -93,5 +102,22 @@ public class ViewControllerSearch {
          });
 
         return btn;
+    }
+    @FXML
+    private void onSupportClicked(ActionEvent actionEvent) { MainController.getInstance().requestViewChange(ViewType.SUPPORT);
+    }
+
+    public void hideOfflineCacheButton(){
+        offlineCacheClearBtn.setVisible(false);
+    }
+
+    @FXML
+    public void onClickCacheDeleter() {
+        OfflineDAO.clearOfflineCache();
+
+    }
+    @FXML
+    public void onClickClose() {
+        Platform.exit();
     }
 }

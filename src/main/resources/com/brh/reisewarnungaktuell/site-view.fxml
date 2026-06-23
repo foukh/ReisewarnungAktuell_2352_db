@@ -9,23 +9,25 @@
 <?import javafx.scene.web.WebView?>
 
 <VBox prefHeight="400.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.brh.reisewarnungaktuell.view.ViewControllerSite">
-   <children>
-      <HBox prefHeight="40.0" prefWidth="699.0" spacing="10">
-         <children>
-             <Button mnemonicParsing="false" onAction="#onSearchClicked" text="Suche" />
-             <Label fx:id="titleLabel" prefHeight="18.0" prefWidth="500.0" text="Reisewarnung: [aktuelle ID und Name der Warnung]">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-          </children>
-      </HBox>
-      <WebView fx:id="webView" prefHeight="364.0" prefWidth="699.0" />
-   </children>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+    <children>
+        <HBox prefHeight="40.0" prefWidth="699.0" spacing="10">
+            <children>
+                <Button mnemonicParsing="false" onAction="#onSearchClicked" text="Suche" />
+                <Button mnemonicParsing="false" onAction="#onClickSaveAsHtml" text="Als Html-Webseite speichern" />
+                <Button mnemonicParsing="false" onAction="#onClickDelete" text="Löschen" />
+                <Label fx:id="titleLabel" prefHeight="18.0" prefWidth="500.0" text="Reisewarnung: [aktuelle ID und Name der Warnung]">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <WebView fx:id="webView" prefHeight="364.0" prefWidth="699.0" />
+    </children>
+    <opaqueInsets>
+        <Insets />
+    </opaqueInsets>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
 </VBox>

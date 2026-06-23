@@ -1,19 +1,24 @@
 package com.brh.reisewarnungaktuell.controller;
 
+import com.brh.reisewarnungaktuell.App;
 import com.brh.reisewarnungaktuell.controller.dao.OfflineDAO;
 import com.brh.reisewarnungaktuell.controller.dao.OnlineDAO;
 import com.brh.reisewarnungaktuell.controller.dao.TravelWarningDAO;
 import com.brh.reisewarnungaktuell.model.TravelWarningPreview;
+import com.brh.reisewarnungaktuell.view.ViewControllerSearch;
 import com.brh.reisewarnungaktuell.view.ViewControllerSite;
 import com.brh.reisewarnungaktuell.view.ViewManager;
 import com.brh.reisewarnungaktuell.view.ViewType;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import javax.swing.text.View;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.SortedMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,16 +59,31 @@ public class MainController {
      */
     public void init() {
 
+
         view = new ViewManager();
 
         if(isOnline()){
             dao = new OnlineDAO();
+            LOGGER.log(Level.INFO, "Onlinebetrieb");
         }
         else{
             dao = new OfflineDAO();
+            LOGGER.log(Level.INFO, "Offlinebetrieb");
+            App.getStage().setTitle(App.getStage().getTitle() + " (offline)");
         }
 
         view.showView(ViewType.SEARCH);
+
+        if(isOnline()){
+            Optional<Object> controlerOptional = view.getCurrentViewController();
+
+            if (controlerOptional.isEmpty()){
+                LOGGER.log(Level.WARNING, "Controller konnte nicht geladen werden");
+                return;
+            }
+            ViewControllerSearch controllerSearch = (ViewControllerSearch) controlerOptional.get();
+            controllerSearch.hideOfflineCacheButton();
+        }
     }
 
     /**

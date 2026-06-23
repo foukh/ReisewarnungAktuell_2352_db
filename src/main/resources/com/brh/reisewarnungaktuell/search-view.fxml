@@ -13,6 +13,9 @@
    <children>
       <HBox prefHeight="42.0" prefWidth="699.0" spacing="10">
          <children>
+            <Button mnemonicParsing="false" onAction="#onSupportClicked" text="Support" />
+            <Button mnemonicParsing="false" onAction="#onClickClose" text="Schliessen" />
+            <Button mnemonicParsing="false" fx:id="offlineCacheClearBtn" onAction="#onClickCacheDeleter" text="Cache löschen" />
             <Label prefHeight="18.0" prefWidth="500.0" text="Aktuelle Reisewarnungen">
                <font>
                   <Font size="17.0" />

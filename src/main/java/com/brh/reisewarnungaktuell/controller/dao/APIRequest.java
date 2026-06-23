@@ -77,7 +77,30 @@ public class APIRequest {
             String body = response.body();
             LOGGER.info("HTTP-Anfrage erfolgreich: " + body);
             callback.invoke(body);
-        } else {
+        }
+
+        else if (response.statusCode() == 300) {
+            String body = response.body();
+            LOGGER.info("HTTP-Anfrage Umleitung:" + body);
+            callback.invoke(body);
+        }
+
+        else if (response.statusCode() == 400) {
+            String body = response.body();
+            LOGGER.info("HTTP-Anfrage Client Error" + body);
+            callback.invoke(body);
+        }
+        else if (response.statusCode() == 500) {
+            String body = response.body();
+            LOGGER.info ("HTTP-Anfrage Server Error" + body);
+            callback.invoke(body);
+        }
+        else if (response.statusCode() == 600) {
+            String body = response.body();
+            LOGGER.info("HTTP-Anfrage Fehlerhafter Bereich" + body);
+            callback.invoke(body);
+        }
+        else {
             LOGGER.warning("HTTP-Anfrage fehlgeschlagen, Status: " + response.statusCode());
         }
     }

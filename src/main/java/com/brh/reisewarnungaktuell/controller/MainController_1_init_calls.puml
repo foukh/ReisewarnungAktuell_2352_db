@@ -1,0 +1,158 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.brh.reisewarnungaktuell.controller.MainController#init()",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.brh.reisewarnungaktuell.controller.MainController",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_97816 { 
+   	label=brh
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1055924860 { 
+   	label=reisewarnungaktuell
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1654603862 { 
+   	label=ViewManager
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ViewManager80286236XXXshowView1260504991[
+	label="+ showView()"
+	style=filled
+	fillcolor=white
+	tooltip="ViewManager
+
+&#10;  Zeigt eine View basierend auf dem ViewType an.&#10;  Lädt die entsprechende FXML-Datei und setzt sie als Szene im Hauptfenster.&#10;  &#10;  @param type Der Typ der anzuzeigenden View (darf nicht null sein)&#10;  @throws IllegalArgumentException wenn type null ist&#10;  @throws RuntimeException wenn die FXML-Datei nicht geladen werden kann&#10; "
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_2007027664 { 
+   	label=MainController
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainController1399290413XXXinit0[
+	label="+ init()"
+	style=filled
+	fillcolor=white
+	tooltip="MainController
+
+&#10;  Initialisiert den Controller und alle abhängigen Komponenten.&#10;  Prüft die Internetverbindung und wählt entsprechend Online- oder Offline-DAO.&#10;  Zeigt die Suchansicht als Startansicht an.&#10; "
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_279633834 { 
+   	label=App
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   App1232918551XXXstart80204510[
+	label="+ start()"
+	style=filled
+	fillcolor=white
+	tooltip="App
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+App1232918551XXXstart80204510 -> MainController1399290413XXXinit0;
+MainController1399290413XXXinit0 -> ViewManager80286236XXXshowView1260504991;
+    
+}
+@enduml

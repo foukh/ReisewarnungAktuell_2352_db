@@ -110,7 +110,16 @@ public class MainController {
      * @throws IllegalArgumentException wenn type null ist
      */
     public void requestViewChange(ViewType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("ViewType darf nicht null sein");
+        }
 
+        try {
+            view.showView(type);
+            LOGGER.log(Level.INFO, "Wechsle zu Ansicht: " + type);
+        } catch (IllegalArgumentException e) {
+            LOGGER.log(Level.SEVERE, "Fehler beim Wechseln zur Ansicht: " + type, e);
+        }
     }
 
     /**

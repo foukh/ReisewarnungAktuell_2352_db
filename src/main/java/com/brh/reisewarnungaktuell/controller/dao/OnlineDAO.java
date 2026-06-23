@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -170,6 +171,7 @@ public class OnlineDAO implements TravelWarningDAO {
             TravelWarning warning = new TravelWarning( id, countryName, title, content);
             LOGGER.log(Level.INFO, "Reisewarnung für '" + countryName + "' erfolgreich geladen");
             callback.invoke( warning );
+            cacheWarnings( warning );
 
         } catch (JsonProcessingException e) {
             LOGGER.log(Level.SEVERE, "Fehler beim Parsen der Reisewarnung: " + e.getMessage(), e);
@@ -182,8 +184,13 @@ public class OnlineDAO implements TravelWarningDAO {
      * @param warning zu speichernde Reisewarnung
      */
     private void cacheWarnings( TravelWarning warning ){
-
-
+        //ToDo: warning der cachelist zufügen
+        if(warning == null){
+            LOGGER.warning("Ungültige Reisewarnung wurde nicht gespeichert");
+            return;
+        }
+        offlineCacheList.add(warning);
+        saveOfflineCache();
     }
 
     /**
@@ -193,6 +200,15 @@ public class OnlineDAO implements TravelWarningDAO {
      * @throws RuntimeException bei IO-Fehler
      */
     private void saveOfflineCache() {
-
+        //ToDo cachelist in einem Zug mit Framework Jackson speichern
+        //alternativ erst in json umwandeln, dann speichern
+        //Pfad ist final Var schon gegeben
+        try {
+            OBJECT_MAPPER.writeValue(new File(OFFLINE_CACHE_PATH), offlineCacheList);
+            LOGGER.log(Level.INFO, "Offline-Cache erfolgreich gespeichert mit " + offlineCacheList.size() + " Einträgen");
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Fehler beim Speichern des Offline-Cache: " + e.getMessage(), e);
+              throw new RuntimeException(e);
+        }
     }
 }

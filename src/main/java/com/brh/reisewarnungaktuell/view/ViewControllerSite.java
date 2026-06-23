@@ -82,6 +82,6 @@ public class ViewControllerSite {
      */
     @FXML
     private void onSearchClicked(ActionEvent event) {
-
+        MainController.getInstance().requestViewChange(ViewType.SEARCH);
     }
 }

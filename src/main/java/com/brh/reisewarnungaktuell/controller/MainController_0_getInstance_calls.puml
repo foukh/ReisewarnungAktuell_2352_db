@@ -1,0 +1,158 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.brh.reisewarnungaktuell.controller.MainController#getInstance()",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.brh.reisewarnungaktuell.controller.MainController",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_97816 { 
+   	label=brh
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1055924860 { 
+   	label=reisewarnungaktuell
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1907297755 { 
+   	label=ViewControllerSearch
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ViewControllerSearch80286236XXXcreateWarningOverview1353243411[
+	label="+ createWarningOverview()"
+	style=filled
+	fillcolor=white
+	tooltip="ViewControllerSearch
+
+&#10;  Erstellt die Übersicht der Reisewarnungen als scrollbare Liste von Buttons.&#10;  Jeder Button repräsentiert eine Reisewarnung und kann angeklickt werden,&#10;  um zur Detailansicht zu wechseln.&#10;  &#10;  @param warnings Optional mit der Liste der TravelWarningPreview-Objekte.&#10; Wenn leer, wird nichts angezeigt.&#10; "
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_2007027664 { 
+   	label=MainController
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MainController1399290413XXXgetInstance0[
+	label="+ getInstance()"
+	style=filled
+	fillcolor=white
+	tooltip="MainController
+
+&#10;  Gibt die Singleton-Instanz des MainControllers zurück.&#10;  Thread-safe Implementierung mit synchronisiertem Zugriff.&#10;  @return Die einzige Instanz des MainControllers&#10; "
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_279633834 { 
+   	label=App
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   App1232918551XXXstart80204510[
+	label="+ start()"
+	style=filled
+	fillcolor=white
+	tooltip="App
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+App1232918551XXXstart80204510 -> MainController1399290413XXXgetInstance0;
+ViewControllerSearch80286236XXXcreateWarningOverview1353243411 -> MainController1399290413XXXgetInstance0;
+    
+}
+@enduml

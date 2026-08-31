@@ -5,10 +5,7 @@ import com.brh.reisewarnungaktuell.controller.dao.OfflineDAO;
 import com.brh.reisewarnungaktuell.controller.dao.OnlineDAO;
 import com.brh.reisewarnungaktuell.controller.dao.TravelWarningDAO;
 import com.brh.reisewarnungaktuell.model.TravelWarningPreview;
-import com.brh.reisewarnungaktuell.view.ViewControllerSearch;
-import com.brh.reisewarnungaktuell.view.ViewControllerSite;
-import com.brh.reisewarnungaktuell.view.ViewManager;
-import com.brh.reisewarnungaktuell.view.ViewType;
+import com.brh.reisewarnungaktuell.view.*;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.swing.text.View;
@@ -65,11 +62,13 @@ public class MainController {
         if(isOnline()){
             dao = new OnlineDAO();
             LOGGER.log(Level.INFO, "Onlinebetrieb");
+
         }
         else{
             dao = new OfflineDAO();
             LOGGER.log(Level.INFO, "Offlinebetrieb");
             App.getStage().setTitle(App.getStage().getTitle() + " (offline)");
+            DialogUtility.showInfoDialog("Keine Internetverbindung – Anwendung läuft im Offline-Modus.");
         }
 
         view.showView(ViewType.SEARCH);
@@ -121,6 +120,7 @@ public class MainController {
          ViewControllerSite controller = (ViewControllerSite) controllerOptional.get();
          dao.requestWarningById( travelWarningId, controller::showSiteContent );
 
+
     }
 
     /**
@@ -137,8 +137,9 @@ public class MainController {
         try {
             view.showView(type);
             LOGGER.log(Level.INFO, "Wechsle zu Ansicht: " + type);
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             LOGGER.log(Level.SEVERE, "Fehler beim Wechseln zur Ansicht: " + type, e);
+            DialogUtility.showErrorDialog("Die Ansicht \"" + type + "\" konnte nicht geladen werden.");
         }
     }
 

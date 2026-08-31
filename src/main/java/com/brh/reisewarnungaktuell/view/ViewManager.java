@@ -23,37 +23,50 @@ public class ViewManager {
     private FXMLLoader currentLoader;
 
     /**
-     * Zeigt eine View basierend auf dem ViewType an.
-     * Lädt die entsprechende FXML-Datei und setzt sie als Szene im Hauptfenster.
-     * 
+     * Zeigt eine View mit Standardgröße an (ruft die parametrisierte Variante
+     * mit den Default-Werten WINDOW_WIDTH/WINDOW_HEIGHT auf).
+     *
      * @param type Der Typ der anzuzeigenden View (darf nicht null sein)
+     */
+    public void showView(ViewType type) {
+        showView(type, WINDOW_WIDTH, WINDOW_HEIGHT);
+    }
+
+    /**
+     * Zeigt eine View basierend auf dem ViewType an und setzt dabei eine
+     * individuell festgelegte Fenstergröße.
+     * Lädt die entsprechende FXML-Datei und setzt sie als Szene im Hauptfenster.
+     *
+     * @param type Der Typ der anzuzeigenden View (darf nicht null sein)
+     * @param width Die gewünschte Breite des Fensters
+     * @param height Die gewünschte Höhe des Fensters
      * @throws IllegalArgumentException wenn type null ist
      * @throws RuntimeException wenn die FXML-Datei nicht geladen werden kann
      */
-    public void showView(ViewType type) {
+    public void showView(ViewType type, double width, double height) {
 
         String viewName = type.getPath();
 
         try{
 
-          currentLoader  = new FXMLLoader(App.class.getResource(viewName));
-          Parent view = currentLoader.load();
+            currentLoader  = new FXMLLoader(App.class.getResource(viewName));
+            Parent view = currentLoader.load();
 
-          if(view == null){
-              throw new NullPointerException("View ist ungültig, konnte nicht geladen werden");
-          }
+            if(view == null){
+                throw new NullPointerException("View ist ungültig, konnte nicht geladen werden");
+            }
 
-          //View ist gültig, es geht weiter...
-          Scene scene = new Scene(view, WINDOW_WIDTH, WINDOW_HEIGHT );
-          App.getStage().setScene(scene);
+            //View ist gültig, es geht weiter...
+            Scene scene = new Scene(view, type.getWidth(), type.getHeight());
+            App.getStage().setScene(scene);
 
-          LOGGER.info("View wurde erfolgreich geladen: "+ type);
+            LOGGER.info("View wurde erfolgreich geladen: "+ type);
 
         }catch( IOException e ){
             LOGGER.log( Level.SEVERE, "Fehler beim Laden der View " + viewName
                     + "Error: "+e.getMessage() );
             throw new RuntimeException("View konnte nicht geladen werden "
-             + viewName +": "+e.getMessage(), e);
+                    + viewName +": "+e.getMessage(), e);
         }
         catch( NullPointerException e){
             LOGGER.log(Level.SEVERE, "Resource nicht gefunden " + viewName, e);
@@ -66,7 +79,7 @@ public class ViewManager {
 
     /**
      * Gibt den Controller der aktuell geladenen View zurück.
-     * 
+     *
      * @return Ein Optional mit dem Controller der aktuellen View,
      * oder leer wenn keine View geladen ist
      */

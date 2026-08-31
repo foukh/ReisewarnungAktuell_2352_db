@@ -113,9 +113,14 @@ public class ViewControllerSearch {
 
     @FXML
     public void onClickCacheDeleter() {
-        OfflineDAO.clearOfflineCache();
+        try {
+            OfflineDAO.clearOfflineCache();
+            DialogUtility.showInfoDialog("Offline-Cache wurde gelöscht.");
+        } catch (RuntimeException e) {
 
+        }
     }
+
     @FXML
     public void onClickClose() {
         Platform.exit();
